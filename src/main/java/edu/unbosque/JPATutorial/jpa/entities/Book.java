@@ -1,5 +1,7 @@
 package edu.unbosque.JPATutorial.jpa.entities;
 
+import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.*;
 
 @Entity
@@ -27,8 +29,8 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @OneToOne(mappedBy = "book")
-    private Edition edition;
+    @OneToMany(mappedBy = "book_id")
+    private List<Edition> edition = new ArrayList<>();
 
     public Book() {}
 
@@ -75,11 +77,13 @@ public class Book {
         this.author = author;
     }
 
-    public Edition getEdition() { return edition; }
+    public Edition getEdition() { return (Edition) edition; }
 
     public void addEdition(Edition edition) {
-        this.edition = edition;
+        this.edition = (List<Edition>) edition;
         edition.setBook(this);
+    }
+    public void removeEdition(Edition edition){
     }
 
 }
